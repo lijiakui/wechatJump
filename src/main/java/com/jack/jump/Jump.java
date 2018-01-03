@@ -132,7 +132,7 @@ public class Jump {
 
     /**
      * 获取顶点的中心点
-     * 因为弧形中心点为线
+     * 弧形顶点为线
      * @param GRB 棋盘
      * @param halma 棋子中心
      * @return 顶点
