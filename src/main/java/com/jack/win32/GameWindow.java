@@ -30,11 +30,10 @@ public class GameWindow {
 
 	/**
 	 * 窗口截图
-	 * @param hwnd
+	 * @param r
 	 * @return
 	 */
-	public static BufferedImage getImage(int hwnd){
-		Rect r = GameWindow.getRect(hwnd);
+	public static BufferedImage getImage(Rect r){
 		Rectangle rg = new Rectangle(r.left, r.top, r.right-r.left, r.bottom-r.top);
 		try {
 			return new Robot().createScreenCapture(rg);

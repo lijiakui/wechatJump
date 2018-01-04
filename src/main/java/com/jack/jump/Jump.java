@@ -1,6 +1,7 @@
 package com.jack.jump;
 
 import com.jack.win32.GameWindow;
+import com.jack.win32.Rect;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,8 +18,9 @@ public class Jump {
     /**
      * 定位旗子的颜色值
      */
-    private static final int DEFULT_HALMA_COLOR = 3554124;
-    private static final int DEFULT_WHITE = 16119285;
+    private static final int DEFULT_HALMA_COLOR = 3554406;
+
+    private static final int DEFULT_WHITE_POINT_COLOR = 16119285;
     /**
      * 起跳系数
      */
@@ -26,12 +28,24 @@ public class Jump {
     /**
      * 横向边界偏移量
      */
-    private static final int BODER_X = 7;
+    private static  int BODER_X = 7;
     /**
      * 纵向边界偏移量
      */
-    private static final int BODER_Y = 358;
+    private static  int BODER_Y = 90;
 
+    /**
+     * 窗口左上角X坐标值
+     */
+    private static int winx = 0;
+    /**
+     * 窗口左上角Y坐标值
+     */
+    private static int winy = 0;
+    /**
+     * 棋子Y轴偏移量
+     */
+    private static int halmaDev = 0;
     public static int goJump(){
         int hwnd = GameWindow.getHwnd("BlueStacks App Player");
         if(hwnd <= 0){
@@ -40,13 +54,17 @@ public class Jump {
 
         try {
             File f = File.createTempFile("tiao",".bmp",file);
-            BufferedImage bufferedImage = GameWindow.getImage(hwnd);
+            Rect rect = GameWindow.getRect(hwnd);
+            winx = rect.left;
+            winy = rect.top;
+            halmaDev = (int)((rect.bottom-rect.top)/100);
+            BODER_Y = (int)((rect.bottom-rect.top)*0.3);
+            BufferedImage bufferedImage = GameWindow.getImage(rect);
             if(bufferedImage == null){
                 return 0;
             }
             ImageIO.write(bufferedImage,"bmp",new FileOutputStream(f));
             int[][] GRB = getImageGRB(bufferedImage);
-            Robot robot = new Robot();
             Point p1 = getHalma(GRB);
             if(p1 == null){
                 return 0;
@@ -57,12 +75,15 @@ public class Jump {
                 return 0;
             }
             System.out.println("方块中心点  X:"+p2.getX()+"   Y:"+p2.getY());
-            robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
             double range = p2.getDistance(p1);
             System.out.println("预估跳跃距离："+range);
             int ms = (int)(range*jump);
             System.out.println("蓄力时间："+ms+"毫秒"+"  起跳系数："+jump);
+
             if(ms != 0){
+                Robot robot = new Robot();
+                robot.mouseMove(p2.getX()+winx,p2.getY()+winy);
+                robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
                 robot.delay(ms);
                 robot.mouseRelease(KeyEvent.BUTTON1_DOWN_MASK);
             }
@@ -116,10 +137,10 @@ public class Jump {
      */
     public static Point getHalma(int[][] GRB){
         try {
-            for(int i=BODER_Y;i<GRB.length;i++){
+            for(int i=GRB.length-BODER_Y;i>BODER_Y;i--){
                 for(int j=BODER_X;j<GRB[i].length-BODER_X;j++){
                     if(Math.abs(GRB[i][j] - DEFULT_HALMA_COLOR)<100){
-                        return new Point(j+10,i+90);
+                        return new Point(j,i);
                     }
                 }
             }
@@ -164,14 +185,12 @@ public class Jump {
                             length ++;
                         }
                         Point vertex = new Point(j+(length/2+length%2),i);
-                        Robot robot = new Robot();
-                        robot.mouseMove(vertex.getX(),vertex.getY());
                         return vertex;
                     }
                 }
             }
             return null;
-        } catch (AWTException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -185,7 +204,7 @@ public class Jump {
      */
     public static Point findBaise(int y,int x,int[][] GRB){
         for(int i=y;i<y+50;i++){
-            if(GRB[i][x] == 16119285){
+            if(GRB[i][x] == DEFULT_WHITE_POINT_COLOR){
                 return new Point(x,i+3);
             }
         }
