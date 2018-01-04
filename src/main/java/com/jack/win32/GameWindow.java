@@ -4,6 +4,7 @@ package com.jack.win32;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
 public class GameWindow {
 
 	private static User32 user32 = User32.INSTANCE;

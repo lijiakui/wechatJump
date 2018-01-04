@@ -1,7 +1,7 @@
 package com.jack.jump;
 
 /**
- * Created by Jack on 2018/1/2.
+ * Created by 李佳魁 on 2018/1/2.
  */
 public class Point {
     private int x;

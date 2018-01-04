@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- * Created by Jack on 2018/1/1.
+ * Created by 李佳魁 on 2018/1/1.
  */
 public class Jump {
     private static final File file = new File("D:\\temp\\");
@@ -20,9 +20,12 @@ public class Jump {
      */
     private static final int DEFULT_HALMA_COLOR = 3554406;
 
+    /**
+     * 白色中心点颜色值
+     */
     private static final int DEFULT_WHITE_POINT_COLOR = 16119285;
     /**
-     * 起跳系数
+     * 蓄力系数
      */
     private static final double jump =2.9;
     /**
