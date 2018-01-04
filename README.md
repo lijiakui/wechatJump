@@ -1,5 +1,5 @@
 # wechatJump
-微信跳一跳
+微信跳一跳 全自动辅助-JAVA
 
 配合bluestacks安卓模拟器使用：http://www.bluestacks.cn
 
