@@ -31,7 +31,7 @@ public class Jump {
     /**
      * 横向边界偏移量
      */
-    private static  int BODER_X = 7;
+    private static  int BODER_X = 10;
     /**
      * 纵向边界偏移量
      */
