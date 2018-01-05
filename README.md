@@ -1,6 +1,7 @@
 # wechatJump
 微信跳一跳 全自动辅助-JAVA
 --
+使用管理员权限运行编译器<br>
 配合bluestacks安卓模拟器使用：http://www.bluestacks.cn<br>
 运行时，请勿遮挡游戏窗口。<br>
 调整蓄力系数jump的值，达到最优。<br>
